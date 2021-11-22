@@ -1,2 +1,2 @@
 # mittag-leffler
-Random number generation for the two-parameter Mittag-Leffler distirbution
+Random number generator for the two-parameter Mittag-Leffler distribution
