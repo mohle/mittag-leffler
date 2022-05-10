@@ -1,6 +1,6 @@
 // Filename: ml.cpp
 // Version:  Standalone C++ Version
-// Date:     November 22, 2021
+// Date:     May 10, 2022
 //
 // Author:   Martin Moehle
 //           Mathematical Institute
@@ -122,7 +122,7 @@ double v_rand_1(double a, double b) {
    h0=(1.0-a)*exp(a/(1.0-a)*log(a));
    // rejection Algorithm 1 of Moehle (2021)
    do {
-      u=uniform_rand();      // sample u uniformly on (0,1)
+      u=uniform_rand();    // sample u uniformly on (0,1)
       v=PI*uniform_rand(); // sample v uniformly on (0,PI)
    } while (u>exp(p*log(h0/h(a,v))));
    return v;
@@ -154,7 +154,7 @@ double mittag_leffler_type2_two_parameter_rand(double a, double b) {
 // Let L be second type two-parameter Mittag-Leffler distributed
 // with parameters 0<a<1 and b>0. This function is based on the fact
 // that L has the same distribution as (G/h(V))^(1-a), where G is gamma
-// distributed with parameters b*(1-a)/a + 1 and 1 having density
+// distributed with parameters b*(1-a)/a+1 and 1 having density
 // x |-> x^(b*(1-a)/a)*exp(-x)/gamma(b*(1-a)/a+1), the function h(a,.) is
 // defined via
 //
@@ -185,7 +185,7 @@ int main(int argc, char *argv[]) {
        i;              // local index
    double a,b,         // parameters of the ML(a,b) distribution
           x,           // variable for pseudo random numbers
-          m,m2,v,      // mean, second mean and variance of ML(a,b)
+          m,m2,v,      // mean, second moment and variance of ML(a,b)
           sm,sm2,svar; // sample mean ...
 
    // time-based seed
@@ -208,11 +208,11 @@ int main(int argc, char *argv[]) {
    << std::endl;
    std::cout << "Parameters: a = " << a << " b = " << b << std::endl;
    m=gamma(b+1.0)/a/gamma(a+b);              // mean of ML(a,b)
-   m2=(a+b)*gamma(b+1.0)/a/a/gamma(2.0*a+b); // second mean of ML(a,b)
+   m2=(a+b)*gamma(b+1.0)/a/a/gamma(2.0*a+b); // second moment of ML(a,b)
    v=m2-m*m;                                 // variance of ML(a,b)
-   std::cout << "Mean:        " << m << std::endl;
-   std::cout << "Second mean: " << m2 << std::endl;
-   std::cout << "Variance:    " << v << std::endl;
+   std::cout << "Mean:          " << m << std::endl;
+   std::cout << "Second moment: " << m2 << std::endl;
+   std::cout << "Variance:      " << v << std::endl;
    // randomized initialization
    randomize(timeseed);
    std::cout << "Generating n = " << n << " pseudo random numbers for ML(a,b):"
@@ -226,8 +226,8 @@ int main(int argc, char *argv[]) {
    std::cout << std::endl;
    sm=sm/n; sm2=sm2/n;
    svar=sm2-sm*sm;
-   std::cout << "Sample mean:        " << sm << std::endl;
-   std::cout << "Sample second mean: " << sm2 << std::endl;
-   std::cout << "Sample variance:    " << svar << std::endl;
+   std::cout << "Sample mean:          " << sm << std::endl;
+   std::cout << "Second sample moment: " << sm2 << std::endl;
+   std::cout << "Sample variance:      " << svar << std::endl;
    return 0;
 } // end main
