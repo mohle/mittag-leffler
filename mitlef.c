@@ -1,6 +1,6 @@
 /* Filename: mitlef.c
    Version:  Standalone ANSI C Version
-   Date:     November 22, 2021
+   Date:     May 10, 2022
 
    Author:   Martin Moehle
              Mathematical Institute
@@ -60,7 +60,7 @@ void my_randomize(void) {
 
 double uniform_rand(void) {
 /* simple pseudo uniform random number in the open unit interval (0,1) */
-   return (rand() + 1.0) / ((double)RAND_MAX+2.0);
+   return (rand()+1.0) / ((double)RAND_MAX+2.0);
 } /* end uniform_rand */
 
 /* The following four functions are based on some standard methods to
@@ -88,7 +88,7 @@ double gamma_rand(double b, double c) {
 distributed with parameter b and W beta distributed with parameters
 c and 1-c. Then VW is gamma distributed with parameters b and c.
 
-Assume now that c >= 1. Then decompose c = m + delta in its integer
+Assume now that c >= 1. Then decompose c=m+delta in its integer
 part m and the fractional part delta. Then generate a gamma(b,delta)
 random variable X and take an independent random variable Y being
 Erlang(b,m) distributed. Then X+Y is gamma(b,c)-distributed. */
@@ -118,8 +118,8 @@ is beta distributed with parameters p and q. */
    return x/(x+y);
 } /* end beta_rand */
 
-/* Now follow the specific functions for the generation of (second type)
-two-parameter Mittag-Leffler distributed pseudo random numbers */
+/* In the following the specific functions for the generation of (second type)
+two-parameter Mittag-Leffler distributed pseudo random numbers are provided. */
 
 double h(double a, double v) {
 /* This auxiliary function is used by the following procedures v_rand_1,
@@ -180,7 +180,7 @@ double mittag_leffler_type2_two_parameter_rand(double a, double b) {
 /* Let L be second type two-parameter Mittag-Leffler distributed
 with parameters 0<a<1 and b>0. This function is based on the fact
 that L has the same distribution as (G/h(V))^(1-a), where G is gamma
-distributed with parameters 1 and b*(1-a)/a + 1 having density
+distributed with parameters 1 and b*(1-a)/a+1 having density
 x |-> x^(b*(1-a)/a)*exp(-x)/gamma(b*(1-a)/a+1), the function h(a,.) is
 defined via
 
@@ -212,7 +212,7 @@ int main(int argc, char *argv[]) {
        i;              /* local index */
    double a,b,         /* parameters of the ML(a,b) distribution */
           x,           /* variable for pseudo random numbers */
-          m,m2,v,      /* mean, second mean and variance of ML(a,b) */
+          m,m2,v,      /* mean, second moment and variance of ML(a,b) */
           sm,sm2,svar; /* sample mean ... */
 
    if (argc != 4) {
@@ -227,11 +227,11 @@ int main(int argc, char *argv[]) {
    printf("Second type two-parameter Mittag-Leffler distribution ML(a,b)\n");
    printf("Parameters: a = %5.3f b = %5.3f\n",a,b);
    m=gamma(b+1.0)/a/gamma(a+b);              /* mean of ML(a,b) */
-   m2=(a+b)*gamma(b+1.0)/a/a/gamma(2.0*a+b); /* second mean of ML(a,b)*/
+   m2=(a+b)*gamma(b+1.0)/a/a/gamma(2.0*a+b); /* second moment of ML(a,b) */
    v=m2-m*m;                                 /* variance of ML(a,b) */
-   printf("Mean:        %9.3f\n",m);
-   printf("Second mean: %9.3f\n",m2);
-   printf("Variance:    %9.3f\n",v);
+   printf("Mean:          %9.3f\n",m);
+   printf("Second moment: %9.3f\n",m2);
+   printf("Variance:      %9.3f\n",v);
    my_randomize();
    printf("Generating n = %d pseudo random numbers for ML(a,b):\n",n);
    sm=0.0;sm2=0.0;
@@ -243,8 +243,8 @@ int main(int argc, char *argv[]) {
    printf("\n");
    sm=sm/n; sm2=sm2/n;
    svar=sm2-sm*sm;
-   printf("Sample mean:        %9.3f\n",sm);
-   printf("Sample second mean: %9.3f\n",sm2);
-   printf("Sample variance:    %9.3f",svar);
+   printf("Sample mean:          %9.3f\n",sm);
+   printf("Second sample momemt: %9.3f\n",sm2);
+   printf("Sample variance:      %9.3f",svar);
    return 0;
 } /* end main */
