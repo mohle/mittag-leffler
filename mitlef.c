@@ -1,6 +1,6 @@
 /* Filename: mitlef.c
    Version:  Standalone ANSI C Version
-   Date:     May 10, 2022
+   Date:     May 22, 2022
 
    Author:   Martin Moehle
              Mathematical Institute
@@ -49,14 +49,14 @@ outdated) C standard functions to generate pseudo random numbers uniformly
 distributed on the open interval (0,1). The program code has the advantage
 that it compiles with any C standard compiler. It should work standalone,
 so no extra include files are needed. In serious applications the outdated
-function randomize() and uniform_rand() should be implemented using a
+functions my_randomize() and uniform_rand() should be implemented using a
 suitable modern random number generator. For academic demonstration however
-the function uniform_rand() below should be sufficient. */
+the following function uniform_rand() should be sufficient. */
 
 void my_randomize(void) {
 /* initialize the random number generator */
    srand((unsigned) time(NULL));
-} /* randomize */
+} /* my_randomize */
 
 double uniform_rand(void) {
 /* simple pseudo uniform random number in the open unit interval (0,1) */
